@@ -33,14 +33,19 @@ jobs:
       - name: list folders
         run: ls -R
 
-      # - name: Zip artifact for deployment
-      #   run: zip release.zip ./* -r
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
 
-      # - name: Upload artifact for deployment job
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: node-app
-      #     path: release.zip
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-app
+          path: release.zip
+
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: node-app
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -49,7 +54,7 @@ jobs:
           app-name: 'node-deploy'
           publish-profile: '${{ secrets.PUBLISH_PROFILE }}'
           slot-name: 'production'
-          package: .          
+          package: release.zip         
 
   # deploy:
   #   runs-on: ubuntu-latest

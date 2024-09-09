@@ -6,14 +6,14 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-app.use(express.static(path.join(__dirname, '../web/build')))
+app.use(express.static('public'))
 
 app.use('/hello', function(req, res){
     res.send('Hello')
 })
 
 app.use('*', function(req, res){
-    res.sendFile(path.join(__dirname, '../web/build', 'index.html'))
+    res.sendFile(path.join(__dirname, './public', 'index.html'))
 })
 
 
